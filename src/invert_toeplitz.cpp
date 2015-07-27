@@ -56,7 +56,7 @@ NumericVector trench(NumericVector r, NumericVector y, int N)
     B(0,i) = v(N-1-i);
     B(i,0) = B(0,i);
   }
-  for(int i = 1; i <= ceil((N-1)/2); i++)
+  for(int i = 1; i <= ceil((N-1)/2.0); i++)
   {
    int j = i;
    for(j=1;j <= N-i-1;j++)
@@ -65,7 +65,7 @@ NumericVector trench(NumericVector r, NumericVector y, int N)
       B(j,i) = B(i,j);
     }
   }
-  for(int i = N-1; i >= ceil(N/2); i--)
+  for(int i = N-1; i >= ceil(N/2.0); i--)
   {
     for(int j = N-i; j <= N-1; j++)
     {

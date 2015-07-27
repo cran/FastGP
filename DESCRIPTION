@@ -1,7 +1,7 @@
 Package: FastGP
 Type: Package
 Title: Efficiently Using Gaussian Processes with Rcpp and RcppEigen
-Version: 1.0
+Version: 1.1
 Date: 2015-07-20
 Author: Giri Gopalan, Luke Bornn
 Maintainer: Giri Gopalan <gopalan88@gmail.com>
@@ -11,5 +11,5 @@ Imports: Rcpp, MASS, mvtnorm, rbenchmark, stats
 LinkingTo: Rcpp, RcppEigen
 Repository: CRAN
 NeedsCompilation: yes
-Packaged: 2015-07-22 19:22:24 UTC; DRB-Giri
-Date/Publication: 2015-07-23 06:58:55
+Packaged: 2015-07-27 17:45:07 UTC; DRB-Giri
+Date/Publication: 2015-07-27 23:16:25
