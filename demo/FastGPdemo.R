@@ -21,7 +21,7 @@ benchmark(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=TRUE),dmvnorm(r
 benchmark(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=FALSE),dmvnorm(rep(1,N),mean=rep(0,N),sigma = Sig,log=T))
 #Rcpp based distance versus R distance
 benchmark(dist(as.matrix(seq(1,N))),rcpp_distance(matrix(seq(1,N),nrow=N),N,1))
-#Rcpp based mvnorm versus mvtnorm rmvnorm
+#Rcpp based rmvnorm versus mvtnorm rmvnorm
 benchmark(rcpp_rmvnorm(10,Sig,rep(0,N)),rmvnorm(10, mean = rep(0, N), sigma = Sig))
 #Rcpp based rmvnorm versus MASS mvtnorm 
 benchmark(rcpp_rmvnorm(10,Sig,rep(0,N)),mvrnorm(10, mu = rep(0, N), Sigma = Sig))

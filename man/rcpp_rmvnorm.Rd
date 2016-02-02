@@ -1,11 +1,13 @@
 \name{rcpp_rmvnorm}
 \alias{rcpp_rmvnorm}
+\alias{rcpp_rmvnorm_stable}
 \alias{rcpp_log_dmvnorm}
 \title{Multivariate Normal Sampling and Log-Density Evaluation}
 \description{These functions allow for the sampling of and evaluation of the log-density of a multivariate normal vector.}
 \usage{
 rcpp_log_dmvnorm(S,mu,x, istoep)
 rcpp_rmvnorm(n,S,mu)
+rcpp_rmvnorm_stable(n,S,mu)
 }
 \arguments{
  \item{S}{Covariance matrix of associated multivariate normal.}

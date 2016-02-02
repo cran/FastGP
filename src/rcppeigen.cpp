@@ -31,3 +31,15 @@ double rcppeigen_get_det(const Eigen::Map<Eigen::MatrixXd> & A){
   Eigen::MatrixXd chol = A.llt().matrixL();
   return chol;
 }
+//find the Cholesky decomposition of a matrix with RcppEigen using a more stable ldlt() function
+//[[Rcpp::export]]
+  Eigen::MatrixXd rcppeigen_get_chol_stable(const Eigen::Map<Eigen::MatrixXd> & A){
+  Eigen::MatrixXd chol = A.ldlt().matrixL();
+  return chol;
+}
+//find the Cholesky decomposition of a matrix with RcppEigen using a more stable ldlt() function
+//[[Rcpp::export]]
+  Eigen::VectorXd rcppeigen_get_chol_diag(const Eigen::Map<Eigen::MatrixXd> & A){
+  Eigen::VectorXd diag = A.ldlt().vectorD();
+  return diag;
+}

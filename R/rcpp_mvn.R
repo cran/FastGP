@@ -8,6 +8,22 @@ rcpp_rmvnorm <- function(n,S,mu)
   mat <- matrix(rnorm(n*m),nrow=m,ncol=n)
   return (t(chol_S%*%mat+mu))
 }
+#draw n samples from a multivariate normal distribution with covariance matrix S and mean mu with a more stable version of Cholesky
+rcpp_rmvnorm_stable <- function(n,S,mu)
+{
+  if(length(mu) == 1){
+    return(rnorm(n,mean=mu,sd=sqrt(S)))
+  }
+  else{
+    chol_S <- rcppeigen_get_chol_stable(S)
+    diag_s <- rcppeigen_get_chol_diag(S)
+    diag_s[which(diag_s < 0)] <- 0
+    diag_s <- diag(sqrt(diag_s))
+    m <- dim(chol_S)[1]
+    mat <- matrix(rnorm(n*m),nrow=m,ncol=n)
+    return (t(chol_S%*%diag_s%*%mat+mu))
+  }
+}
 #invert a Toeplitz matrix (useful for GPs where points are evenly spaced)
 tinv <- function(A){
   M <- A/(A[1,1])

@@ -29,3 +29,11 @@ rcppeigen_get_chol <- function(A) {
     .Call('FastGP_rcppeigen_get_chol', PACKAGE = 'FastGP', A)
 }
 
+rcppeigen_get_chol_stable <- function(A) {
+    .Call('FastGP_rcppeigen_get_chol_stable', PACKAGE = 'FastGP', A)
+}
+
+rcppeigen_get_chol_diag <- function(A) {
+    .Call('FastGP_rcppeigen_get_chol_diag', PACKAGE = 'FastGP', A)
+}
+

@@ -88,3 +88,25 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// rcppeigen_get_chol_stable
+Eigen::MatrixXd rcppeigen_get_chol_stable(const Eigen::Map<Eigen::MatrixXd>& A);
+RcppExport SEXP FastGP_rcppeigen_get_chol_stable(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd>& >::type A(ASEXP);
+    __result = Rcpp::wrap(rcppeigen_get_chol_stable(A));
+    return __result;
+END_RCPP
+}
+// rcppeigen_get_chol_diag
+Eigen::VectorXd rcppeigen_get_chol_diag(const Eigen::Map<Eigen::MatrixXd>& A);
+RcppExport SEXP FastGP_rcppeigen_get_chol_diag(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd>& >::type A(ASEXP);
+    __result = Rcpp::wrap(rcppeigen_get_chol_diag(A));
+    return __result;
+END_RCPP
+}
