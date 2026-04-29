@@ -1,33 +1,25 @@
-#A demonstration of functions from the GPPack
+#A demonstration of functions from FastGP
 library(FastGP)
 library(mvtnorm)
 library(MASS)
-library(rbenchmark)
 
 N <- 200
 sigma <- 1 #variance parameter in the covariance function
 phi <- 1 #decay parameter for the exponential kernel
 Sig <- as.matrix(sigma*exp(-as.matrix(dist(seq(1,N)))^2/phi)) #test covariance function
 
-#RcppEigen based inverse vs. R inverse
-benchmark(solve(Sig),rcppeigen_invert_matrix(Sig))
-#Rcpp based Toeplitz inverse vs. R inverse
-benchmark(solve(Sig),tinv(Sig))
-#RcppEigen based determinant vs. R determinant
-benchmark(det(Sig),rcppeigen_get_det(Sig))
-#Rcpp based dmvnorm vs. mvtnorm package (with Toeplitz flag)
-benchmark(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=TRUE),dmvnorm(rep(1,N),mean=rep(0,N),sigma = Sig,log=T))
-#Rcpp based dmvnorm vs. mvtnorm package (without Toeplitz flag)
-benchmark(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=FALSE),dmvnorm(rep(1,N),mean=rep(0,N),sigma = Sig,log=T))
-#Rcpp based distance versus R distance
-benchmark(dist(as.matrix(seq(1,N))),rcpp_distance(matrix(seq(1,N),nrow=N),N,1))
-#Rcpp based rmvnorm versus mvtnorm rmvnorm
-benchmark(rcpp_rmvnorm(10,Sig,rep(0,N)),rmvnorm(10, mean = rep(0, N), sigma = Sig))
-#Rcpp based rmvnorm versus MASS mvtnorm 
-benchmark(rcpp_rmvnorm(10,Sig,rep(0,N)),mvrnorm(10, mu = rep(0, N), Sigma = Sig))
+#compare output of FastGP with base, mvtnorm, MASS
+max(abs(solve(Sig)-rcppeigen_invert_matrix(Sig)))
+max(abs(solve(Sig)-tinv(Sig)))
+abs(det(Sig)-rcppeigen_get_det(Sig))
+abs(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=TRUE)-dmvnorm(rep(1,N),mean=rep(0,N),sigma = Sig,log=T))
+abs(rcpp_log_dmvnorm(S=Sig, mu=rep(0,N), x=rep(1,N),istoep=FALSE)-dmvnorm(rep(1,N),mean=rep(0,N),sigma = Sig,log=T))
+max(abs(as.matrix(dist(as.matrix(seq(1,N))))-rcpp_distance(matrix(seq(1,N),nrow=N),N,1)))
+
+#generate multivariate normal samples
+rcpp_rmvnorm(10,Sig,rep(0,N))
 
 #Now a demo of elliptical slice sampling
-
 #Relevant Parameters:
 A <- 1 #amplitude of the sin function used for our signal
 T <- 5 #period of the sin function used as our signal
@@ -63,6 +55,3 @@ plot(colMeans(mcmc_samples), type="l")
 points(t, type="l", lwd=3, col="red")
 points(colMeans(mcmc_samples) + 2* apply(mcmc_samples, 2, sd), type="l", lty="dashed")
 points(colMeans(mcmc_samples) - 2* apply(mcmc_samples, 2, sd), type="l", lty="dashed")
-
-#test ess with rcpp likelihood versus non rcpp likelihood
-benchmark(ess(log_lik_rcpp,s,Sig,1000,250,100,FALSE),ess(log_lik,s,Sig,1000,250,100,TRUE),replications=2)
